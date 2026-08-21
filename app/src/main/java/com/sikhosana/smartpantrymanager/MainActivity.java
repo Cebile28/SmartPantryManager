@@ -1,6 +1,9 @@
 package com.sikhosana.smartpantrymanager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -23,7 +26,7 @@ import java.util.List;
  *
  * Shows everything the user currently has at home, and offers delete straight
  * from the list. Adding and editing happen on a separate screen reached with
- * an Intent, which is added in the next stage.
+ * an Intent that optionally carries the id of the item being edited.
  */
 public class MainActivity extends AppCompatActivity
         implements PantryAdapter.OnItemActionListener {
@@ -55,8 +58,7 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setAdapter(adapter);
 
         FloatingActionButton fab = findViewById(R.id.fabAddItem);
-        fab.setOnClickListener(v ->
-                Toast.makeText(this, "Add screen comes next", Toast.LENGTH_SHORT).show());
+        fab.setOnClickListener(v -> openAddScreen());
     }
 
     /**
@@ -83,11 +85,56 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
     }
 
+    // ------------------------------------------------------- toolbar menu
+
+    /** Inflates the toolbar menu, which is this app's navigation element. */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_suggestions) {
+            startActivity(new Intent(this, SuggestedRecipesActivity.class));
+            return true;
+        }
+
+        if (id == R.id.action_settings) {
+            Toast.makeText(this, "Settings screen comes next", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    // ------------------------------------------------------------- navigation
+
+    /** Opens the form with no extras, so it starts blank in "add" mode. */
+    private void openAddScreen() {
+        Intent intent = new Intent(this, AddEditItemActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Opens the same form carrying the item's id. AddEditItemActivity reads
+     * that extra, loads the record and pre-fills the fields, which is how one
+     * screen serves both adding and editing.
+     */
+    private void openEditScreen(PantryItem item) {
+        Intent intent = new Intent(this, AddEditItemActivity.class);
+        intent.putExtra(AddEditItemActivity.EXTRA_ITEM_ID, item.getId());
+        startActivity(intent);
+    }
+
     // ------------------------------------------- PantryAdapter callbacks
 
     @Override
     public void onItemClicked(PantryItem item) {
-        Toast.makeText(this, "Edit screen comes next", Toast.LENGTH_SHORT).show();
+        openEditScreen(item);
     }
 
     @Override

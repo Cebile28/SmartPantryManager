@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    A section title inside the suggestions list.
+
+    Using a header row rather than two separate lists keeps the two groups
+    clearly labelled while still scrolling as one, which is what the brief
+    asks for: the Almost There recipes must be visibly separate from the
+    strict suggestions.
+-->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/textSectionHeader"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="18dp"
+    android:paddingBottom="8dp"
+    android:textSize="14sp"
+    android:textStyle="bold"
+    android:textAllCaps="true"
+    android:background="#EEEEEE"
+    android:textColor="#00695C"
+    tools:text="You can cook these now" />

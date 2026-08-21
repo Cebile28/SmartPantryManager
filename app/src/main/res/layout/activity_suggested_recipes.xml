@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    The pantry list screen.
-
-    A RelativeLayout lets the empty-state message sit centred on top of the
-    same area the RecyclerView occupies: exactly one of the two is visible at
-    any time, decided in code by showEmptyState().
--->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAFAFA"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="#FAFAFA">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -22,15 +15,12 @@
         app:titleTextColor="#FFFFFF" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerPantry"
+        android:id="@+id/recyclerSuggestions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
-        android:clipToPadding="false"
-        android:paddingBottom="88dp"
         android:scrollbars="vertical" />
 
-    <!-- Shown instead of the list when the pantry is empty -->
     <LinearLayout
         android:id="@+id/layoutEmpty"
         android:layout_width="match_parent"
@@ -42,34 +32,23 @@
         android:visibility="gone">
 
         <TextView
+            android:id="@+id/textEmptyTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Your pantry is empty"
+            android:text="No recipes yet"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#616161" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/textEmptyMessage"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Tap + to add the ingredients you have at home"
+            android:text="Add more ingredients to your pantry and they will appear here."
             android:textSize="15sp"
             android:textColor="#9E9E9E"
             android:gravity="center" />
     </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:src="@android:drawable/ic_input_add"
-        android:contentDescription="Add pantry item"
-        app:backgroundTint="#00796B"
-        app:tint="#FFFFFF" />
-
 
 </RelativeLayout>

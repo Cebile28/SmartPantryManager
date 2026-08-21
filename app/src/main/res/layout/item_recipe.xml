@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One recipe card in the suggestions list. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="?android:attr/selectableItemBackground">
+
+    <TextView
+        android:id="@+id/textRecipeName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:textColor="#212121"
+        tools:text="Cheese Omelette" />
+
+    <TextView
+        android:id="@+id/textRecipeSummary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:textSize="14sp"
+        android:textColor="#616161"
+        tools:text="4 ingredients - 10 min - Breakfast" />
+
+    <!-- Only shown in the Almost There section -->
+    <TextView
+        android:id="@+id/textShortfall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:textColor="#EF6C00"
+        android:visibility="gone"
+        tools:text="Missing Sugar"
+        tools:visibility="visible" />
+
+</LinearLayout>
