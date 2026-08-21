@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -116,9 +115,16 @@ public class SuggestedRecipesActivity extends AppCompatActivity
 
     // ------------------------------------------ RecipeAdapter callback
 
+    /**
+     * Opens the detail screen, passing only the recipe's id in the Intent.
+     * The detail screen re-reads the record from the database, which keeps
+     * the Intent small and avoids showing a stale copy of the data.
+     */
     @Override
     public void onRecipeClicked(Recipe recipe) {
-        Toast.makeText(this, "Recipe detail screen comes next", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, RecipeDetailActivity.class);
+        intent.putExtra(RecipeDetailActivity.EXTRA_RECIPE_ID, recipe.getId());
+        startActivity(intent);
     }
 
     @Override
