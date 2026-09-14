@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -18,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sikhosana.smartpantrymanager.data.PantryDao;
 import com.sikhosana.smartpantrymanager.model.PantryItem;
 import com.sikhosana.smartpantrymanager.ui.PantryAdapter;
+import com.sikhosana.smartpantrymanager.util.Prefs;
 
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity
 
     private RecyclerView recyclerView;
     private View layoutEmpty;
+    private TextView textExpiryBanner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity
 
         recyclerView = findViewById(R.id.recyclerPantry);
         layoutEmpty = findViewById(R.id.layoutEmpty);
+        textExpiryBanner = findViewById(R.id.textExpiryBanner);
 
         adapter = new PantryAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -77,6 +81,35 @@ public class MainActivity extends AppCompatActivity
         List<PantryItem> items = pantryDao.getAll();
         adapter.setItems(items);
         showEmptyState(items.isEmpty());
+        updateExpiryBanner();
+    }
+
+    /**
+     * Shows a warning strip when food is about to go off.
+     *
+     * Both the on/off switch and the number of days come from Settings, so
+     * this is where the preference actually takes effect. Because it is
+     * called from loadPantryItems(), which runs in onResume, returning from
+     * the settings screen updates the banner immediately.
+     */
+    private void updateExpiryBanner() {
+        if (!Prefs.areExpiryAlertsEnabled(this)) {
+            textExpiryBanner.setVisibility(View.GONE);
+            return;
+        }
+
+        int days = Prefs.getWarningDays(this);
+        int count = pantryDao.getExpiringWithin(days).size();
+
+        if (count == 0) {
+            textExpiryBanner.setVisibility(View.GONE);
+            return;
+        }
+
+        textExpiryBanner.setText(count == 1
+                ? "1 item is expiring within " + days + " days - use it soon"
+                : count + " items are expiring within " + days + " days - use them soon");
+        textExpiryBanner.setVisibility(View.VISIBLE);
     }
 
     /** Exactly one of the list and the empty message is visible at a time. */
@@ -104,7 +137,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (id == R.id.action_settings) {
-            Toast.makeText(this, "Settings screen comes next", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 

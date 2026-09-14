@@ -21,11 +21,25 @@
         android:elevation="4dp"
         app:titleTextColor="#FFFFFF" />
 
+    <!-- Shown only when expiry alerts are switched on in Settings and
+         something is actually expiring within the chosen window -->
+    <TextView
+        android:id="@+id/textExpiryBanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:padding="12dp"
+        android:background="#FFF3E0"
+        android:textColor="#E65100"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerPantry"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/textExpiryBanner"
         android:clipToPadding="false"
         android:paddingBottom="88dp"
         android:scrollbars="vertical" />
@@ -35,7 +49,7 @@
         android:id="@+id/layoutEmpty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/textExpiryBanner"
         android:orientation="vertical"
         android:gravity="center"
         android:padding="32dp"
@@ -70,6 +84,5 @@
         android:contentDescription="Add pantry item"
         app:backgroundTint="#00796B"
         app:tint="#FFFFFF" />
-
 
 </RelativeLayout>

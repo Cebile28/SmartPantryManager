@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.sikhosana.smartpantrymanager.data.PantryDao;
 import com.sikhosana.smartpantrymanager.model.PantryItem;
+import com.sikhosana.smartpantrymanager.util.Prefs;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -80,6 +81,12 @@ public class AddEditItemActivity extends AppCompatActivity {
             loadExistingItem();
         } else {
             setTitle("Add Item");
+
+            // Start on whichever unit the user chose in Settings.
+            int preferred = indexOfUnit(Prefs.getPreferredUnit(this));
+            if (preferred >= 0) {
+                spinnerUnit.setSelection(preferred);
+            }
         }
 
         // Restore a date the user picked before the screen rotated.
