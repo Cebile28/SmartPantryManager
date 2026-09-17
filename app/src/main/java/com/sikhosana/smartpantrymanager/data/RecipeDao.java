@@ -15,12 +15,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Reads recipes and their ingredients out of the database.
- *
- * Recipes are seeded once and never edited by the user, so this class only
- * needs to read - there are no insert or update methods here.
- */
+
+ //Reads recipes and their ingredients out of the database.
+ //Recipes are seeded once and never edited by the user, so this class only
+ //needs to read - there are no insert or update methods here.
+
 public class RecipeDao {
 
     private static final String TAG = "RecipeDao";
@@ -31,15 +30,13 @@ public class RecipeDao {
         this.helper = DatabaseHelper.getInstance(context);
     }
 
-    /**
-     * Every recipe, each with its ingredient list already filled in.
-     *
-     * This deliberately runs two queries - all recipes, then all ingredients -
-     * and stitches them together in memory. The obvious alternative is to loop
-     * the recipes and query the ingredients of each one, but that is the
-     * classic "N+1 queries" problem: 18 recipes would mean 19 trips to the
-     * database instead of 2, and it gets worse as the collection grows.
-     */
+     //Every recipe, each with its ingredient list already filled in.
+     // This deliberately runs two queries - all recipes, then all ingredients -
+     //and stitches them together in memory. The obvious alternative is to loop
+     //the recipes and query the ingredients of each one, but that is the
+     //classic "N+1 queries" problem: 18 recipes would mean 19 trips to the
+     //database instead of 2, and it gets worse as the collection grows.
+
     public List<Recipe> getAllWithIngredients() {
         List<Recipe> recipes = loadRecipes(null, null);
         if (recipes.isEmpty()) {
@@ -57,7 +54,7 @@ public class RecipeDao {
         return recipes;
     }
 
-    /** One recipe with its ingredients, or null when the id is unknown. */
+    // One recipe with its ingredients, or null when the id is unknown.
     public Recipe getById(long recipeId) {
         List<Recipe> found = loadRecipes(
                 RecipeTable.COL_ID + " = ?",
@@ -72,7 +69,7 @@ public class RecipeDao {
         return recipe;
     }
 
-    /** Used by the settings screen to report how many recipes are loaded. */
+    // Used by the settings screen to report how many recipes are loaded.
     public int count() {
         SQLiteDatabase db = helper.getReadableDatabase();
         try (Cursor cursor = db.rawQuery(
@@ -81,7 +78,7 @@ public class RecipeDao {
         }
     }
 
-    // ------------------------------------------------------------- helpers
+    // helpers
 
     private List<Recipe> loadRecipes(String whereClause, String[] args) {
         List<Recipe> recipes = new ArrayList<>();
@@ -103,7 +100,7 @@ public class RecipeDao {
         return recipes;
     }
 
-    /** Every ingredient in the database, grouped by the recipe that owns it. */
+    // Every ingredient in the database, grouped by the recipe that owns it.
     private Map<Long, List<RecipeIngredient>> loadAllIngredients() {
         Map<Long, List<RecipeIngredient>> grouped = new HashMap<>();
 

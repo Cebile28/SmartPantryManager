@@ -23,13 +23,11 @@ import com.sikhosana.smartpantrymanager.util.Prefs;
 
 import java.util.List;
 
-/**
- * The pantry list - the app's home screen.
- *
- * Shows everything the user currently has at home, and offers delete straight
- * from the list. Adding and editing happen on a separate screen reached with
- * an Intent that optionally carries the id of the item being edited.
- */
+ // The pantry list - the app's home screen.
+ // Shows everything the user currently has at home, and offers delete straight
+ // from the list. Adding and editing happen on a separate screen reached with
+ // an Intent that optionally carries the id of the item being edited.
+
 public class MainActivity extends AppCompatActivity
         implements PantryAdapter.OnItemActionListener {
 
@@ -65,12 +63,12 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(v -> openAddScreen());
     }
 
-    /**
-     * Reloading here rather than in onCreate matters: onCreate runs once, but
-     * onResume runs every time this screen comes back to the front - including
-     * after returning from the Add/Edit screen - so the list always shows the
-     * current contents of the database.
-     */
+
+     //Reloading here rather than in onCreate matters: onCreate runs once, but
+     // onResume runs every time this screen comes back to the front - including
+     // after returning from the Add/Edit screen - so the list always shows the
+     // current contents of the database.
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -84,14 +82,14 @@ public class MainActivity extends AppCompatActivity
         updateExpiryBanner();
     }
 
-    /**
-     * Shows a warning strip when food is about to go off.
-     *
-     * Both the on/off switch and the number of days come from Settings, so
-     * this is where the preference actually takes effect. Because it is
-     * called from loadPantryItems(), which runs in onResume, returning from
-     * the settings screen updates the banner immediately.
-     */
+
+     // Shows a warning strip when food is about to go off.
+
+     //Both the on/off switch and the number of days come from Settings, so
+     // this is where the preference actually takes effect. Because it is
+     // called from loadPantryItems(), which runs in onResume, returning from
+     // the settings screen updates the banner immediately.
+
     private void updateExpiryBanner() {
         if (!Prefs.areExpiryAlertsEnabled(this)) {
             textExpiryBanner.setVisibility(View.GONE);
@@ -112,15 +110,15 @@ public class MainActivity extends AppCompatActivity
         textExpiryBanner.setVisibility(View.VISIBLE);
     }
 
-    /** Exactly one of the list and the empty message is visible at a time. */
+    // Exactly one of the list and the empty message is visible at a time.
     private void showEmptyState(boolean isEmpty) {
         layoutEmpty.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
         recyclerView.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
     }
 
-    // ------------------------------------------------------- toolbar menu
+    // toolbar menu
 
-    /** Inflates the toolbar menu, which is this app's navigation element. */
+    // Inflates the toolbar menu, which is this app's navigation element.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -144,26 +142,25 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    // ------------------------------------------------------------- navigation
+    // navigation
 
-    /** Opens the form with no extras, so it starts blank in "add" mode. */
+    // Opens the form with no extras, so it starts blank in "add" mode.
     private void openAddScreen() {
         Intent intent = new Intent(this, AddEditItemActivity.class);
         startActivity(intent);
     }
 
-    /**
-     * Opens the same form carrying the item's id. AddEditItemActivity reads
-     * that extra, loads the record and pre-fills the fields, which is how one
-     * screen serves both adding and editing.
-     */
+     // Opens the same form carrying the item's id. AddEditItemActivity reads
+     // that extra, loads the record and pre-fills the fields, which is how one
+     // screen serves both adding and editing.
+
     private void openEditScreen(PantryItem item) {
         Intent intent = new Intent(this, AddEditItemActivity.class);
         intent.putExtra(AddEditItemActivity.EXTRA_ITEM_ID, item.getId());
         startActivity(intent);
     }
 
-    // ------------------------------------------- PantryAdapter callbacks
+    // PantryAdapter callbacks
 
     @Override
     public void onItemClicked(PantryItem item) {

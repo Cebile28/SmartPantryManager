@@ -22,23 +22,21 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-/**
- * Adds a new pantry item, or edits an existing one.
- *
- * One screen handles both jobs. Which mode it is in depends on whether the
- * calling Activity put an item id into the Intent:
- *
- *   Add  - startActivity(new Intent(this, AddEditItemActivity.class))
- *   Edit - the same, plus intent.putExtra(EXTRA_ITEM_ID, item.getId())
- *
- * Sharing the screen avoids duplicating the form and its validation twice.
- */
+
+ //Adds a new pantry item, or edits an existing one.
+ //One screen handles both jobs. Which mode it is in depends on whether the
+ // calling Activity put an item id into the Intent:
+ //   Add  - startActivity(new Intent(this, AddEditItemActivity.class))
+ //  Edit - the same, plus intent.putExtra(EXTRA_ITEM_ID, item.getId())
+
+ //Sharing the screen avoids duplicating the form and its validation twice.
+
 public class AddEditItemActivity extends AppCompatActivity {
 
-    /** Key for the Intent extra carrying the id of the item being edited. */
+    // Key for the Intent extra carrying the id of the item being edited.
     public static final String EXTRA_ITEM_ID = "com.sikhosana.smartpantrymanager.ITEM_ID";
 
-    /** Saved across rotation so a chosen date is not lost. */
+    // Saved across rotation so a chosen date is not lost.
     private static final String STATE_EXPIRY = "state_expiry";
 
     private static final String[] UNITS =
@@ -100,12 +98,12 @@ public class AddEditItemActivity extends AppCompatActivity {
         return itemId != PantryItem.NO_ID;
     }
 
-    /**
-     * onCreate runs again from scratch when the device rotates, so anything not
-     * held in a View has to be saved here or it is lost. The EditText contents
-     * are restored automatically because they have ids; expiryDate is a plain
-     * field, so we save it ourselves.
-     */
+
+     // onCreate runs again from scratch when the device rotates, so anything not
+     // held in a View has to be saved here or it is lost. The EditText contents
+     // are restored automatically because they have ids; expiryDate is a plain
+     // field, so we save it ourselves.
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -151,7 +149,7 @@ public class AddEditItemActivity extends AppCompatActivity {
         buttonCancel.setOnClickListener(v -> finish());
     }
 
-    // ----------------------------------------------------------- edit mode
+    //  edit mode
 
     private void loadExistingItem() {
         PantryItem item = pantryDao.getById(itemId);
@@ -184,14 +182,14 @@ public class AddEditItemActivity extends AppCompatActivity {
         return -1;
     }
 
-    /** Shows 2 rather than 2.0, but keeps 1.5 intact. */
+    // Shows 2 rather than 2.0, but keeps 1.5 intact.
     private String trimTrailingZero(double value) {
         return (value == Math.floor(value))
                 ? String.valueOf((long) value)
                 : String.valueOf(value);
     }
 
-    // --------------------------------------------------------- date picker
+    //  date picker
 
     private void showDatePicker() {
         Calendar calendar = Calendar.getInstance();
@@ -223,15 +221,9 @@ public class AddEditItemActivity extends AppCompatActivity {
         }
     }
 
-    // ---------------------------------------------------- validation + save
+    //  validation + save
 
-    /**
-     * Checks the form and saves.
-     *
-     * Errors are set on the EditText itself with setError() rather than shown
-     * as a Toast, so the message appears next to the field that caused it and
-     * the keyboard focus moves there.
-     */
+
     private void saveItem() {
         String name = editName.getText().toString().trim();
         String quantityText = editQuantity.getText().toString().trim();

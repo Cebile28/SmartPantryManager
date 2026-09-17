@@ -12,17 +12,17 @@ import com.sikhosana.smartpantrymanager.model.PantryItem;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * All database access for pantry items lives here.
- *
- * Keeping the SQL in one place means the Activities deal only with PantryItem
- * objects and never touch a Cursor or a query string. If the storage layer ever
- * changed, only this class would need rewriting.
- *
- * Every method uses parameterised queries (the ? placeholders) rather than
- * building SQL by joining strings together, which keeps user input from being
- * interpreted as SQL.
- */
+
+ //All database access for pantry items lives here.
+
+ //Keeping the SQL in one place means the Activities deal only with PantryItem
+ // objects and never touch a Cursor or a query string. If the storage layer ever
+ //changed, only this class would need rewriting.
+
+ //Every method uses parameterised queries (the ? placeholders) rather than
+ //building SQL by joining strings together, which keeps user input from being
+ //interpreted as SQL.
+
 public class PantryDao {
 
     private static final String TAG = "PantryDao";
@@ -33,13 +33,10 @@ public class PantryDao {
         this.helper = DatabaseHelper.getInstance(context);
     }
 
-    // ------------------------------------------------------------ CREATE
+    // CREATE
+     //Saves a new pantry item.
+     //@return the generated row id, or -1 if the insert failed
 
-    /**
-     * Saves a new pantry item.
-     *
-     * @return the generated row id, or -1 if the insert failed
-     */
     public long insert(PantryItem item) {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = toContentValues(item);
@@ -53,16 +50,15 @@ public class PantryDao {
         return id;
     }
 
-    // -------------------------------------------------------------- READ
-
-    /** Every pantry item, sorted alphabetically and ignoring case. */
+    // READ
+    // Every pantry item, sorted alphabetically and ignoring case.
     public List<PantryItem> getAll() {
         String sql = "SELECT * FROM " + PantryTable.TABLE_NAME +
                 " ORDER BY " + PantryTable.COL_NAME + " COLLATE NOCASE ASC";
         return runQuery(sql, null);
     }
 
-    /** One item by id, or null when nothing matches. */
+    //One item by id, or null when nothing matches.
     public PantryItem getById(long id) {
         String sql = "SELECT * FROM " + PantryTable.TABLE_NAME +
                 " WHERE " + PantryTable.COL_ID + " = ?";
@@ -70,7 +66,7 @@ public class PantryDao {
         return results.isEmpty() ? null : results.get(0);
     }
 
-    /** Items whose name contains the keyword, for the search box. */
+    // Items whose name contains the keyword, for the search box.
     public List<PantryItem> searchByName(String keyword) {
         String sql = "SELECT * FROM " + PantryTable.TABLE_NAME +
                 " WHERE " + PantryTable.COL_NAME + " LIKE ?" +
@@ -78,11 +74,11 @@ public class PantryDao {
         return runQuery(sql, new String[]{"%" + keyword + "%"});
     }
 
-    /**
-     * Items expiring within the given number of days, soonest first.
-     * Items with no expiry date are excluded, and already-expired items are
-     * included so the user is told about them.
-     */
+
+     //Items expiring within the given number of days, soonest first.
+     //Items with no expiry date are excluded, and already-expired items are
+     //included so the user is told about them.
+
     public List<PantryItem> getExpiringWithin(int days) {
         long cutoff = System.currentTimeMillis() + (days * 24L * 60 * 60 * 1000);
 
@@ -93,7 +89,7 @@ public class PantryDao {
         return runQuery(sql, new String[]{String.valueOf(cutoff)});
     }
 
-    /** How many items are in the pantry, used for the empty-state message. */
+    //How many items are in the pantry, used for the empty-state message.
     public int count() {
         SQLiteDatabase db = helper.getReadableDatabase();
         String sql = "SELECT COUNT(*) FROM " + PantryTable.TABLE_NAME;
@@ -103,13 +99,12 @@ public class PantryDao {
         }
     }
 
-    /**
-     * True when an item of this name already exists, ignoring case.
-     * Used by the add form so the user is warned instead of quietly creating
-     * two separate "Milk" rows that would confuse the recipe matching.
-     *
-     * @param excludeId pass the id being edited, or -1 when adding
-     */
+
+     // True when an item of this name already exists, ignoring case.
+     // Used by the add form so the user is warned instead of quietly creating
+     //two separate "Milk" rows that would confuse the recipe matching.
+     //@param excludeId pass the id being edited, or -1 when adding
+
     public boolean nameExists(String name, long excludeId) {
         SQLiteDatabase db = helper.getReadableDatabase();
         String sql = "SELECT COUNT(*) FROM " + PantryTable.TABLE_NAME +
@@ -122,9 +117,8 @@ public class PantryDao {
         }
     }
 
-    // ------------------------------------------------------------ UPDATE
-
-    /** Saves changes to an existing item. Returns true when a row was changed. */
+    //UPDATE
+    // Saves changes to an existing item. Returns true when a row was changed.
     public boolean update(PantryItem item) {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = toContentValues(item);
@@ -136,9 +130,8 @@ public class PantryDao {
         return rows > 0;
     }
 
-    // ------------------------------------------------------------ DELETE
-
-    /** Removes one item. Returns true when a row was actually deleted. */
+    // DELETE
+    //Removes one item. Returns true when a row was actually deleted.
     public boolean delete(long id) {
         SQLiteDatabase db = helper.getWritableDatabase();
 
@@ -149,13 +142,13 @@ public class PantryDao {
         return rows > 0;
     }
 
-    /** Empties the pantry. Offered from the settings screen. */
+    // Empties the pantry. Offered from the settings screen.
     public int deleteAll() {
         SQLiteDatabase db = helper.getWritableDatabase();
         return db.delete(PantryTable.TABLE_NAME, null, null);
     }
 
-    // ------------------------------------------------------------ helpers
+    //helpers
 
     private ContentValues toContentValues(PantryItem item) {
         ContentValues values = new ContentValues();
@@ -167,7 +160,7 @@ public class PantryDao {
         return values;
     }
 
-    /** Runs a query and turns every row into a PantryItem. */
+    // Runs a query and turns every row into a PantryItem.
     private List<PantryItem> runQuery(String sql, String[] args) {
         List<PantryItem> items = new ArrayList<>();
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -185,7 +178,7 @@ public class PantryDao {
         return items;
     }
 
-    /** Reads the current row of a Cursor into a PantryItem. */
+    //Reads the current row of a Cursor into a PantryItem.
     private PantryItem fromCursor(Cursor cursor) {
         PantryItem item = new PantryItem();
         item.setId(cursor.getLong(cursor.getColumnIndexOrThrow(PantryTable.COL_ID)));

@@ -1,19 +1,19 @@
 package com.sikhosana.smartpantrymanager.model;
 
-/**
- * One ingredient the user currently has at home.
- *
- * Represents a single row of the pantry table. Quantity is stored as a double
- * rather than an int because real pantry amounts are fractional - half a litre
- * of milk, 1.5 kg of flour - and the strict-matching rule has to compare these
- * against recipe requirements numerically.
- */
+
+ // One ingredient the user currently has at home.
+
+ //Represents a single row of the pantry table. Quantity is stored as a double
+ //rather than an int because real pantry amounts are fractional - half a litre
+ //of milk, 1.5 kg of flour - and the strict-matching rule has to compare these
+ //against recipe requirements numerically.
+
 public class PantryItem {
 
-    /** Used for a new item that has not been saved to the database yet. */
+    // Used for a new item that has not been saved to the database yet. */
     public static final long NO_ID = -1;
 
-    /** Stored in expiryDate when the user chose not to enter one. */
+    // Stored in expiryDate when the user chose not to enter one. */
     public static final long NO_EXPIRY = 0L;
 
     private long id;
@@ -64,21 +64,21 @@ public class PantryItem {
     public long getDateAdded() { return dateAdded; }
     public void setDateAdded(long dateAdded) { this.dateAdded = dateAdded; }
 
-    /** True when the user supplied an expiry date for this item. */
+    // True when the user supplied an expiry date for this item.
     public boolean hasExpiryDate() {
         return expiryDate != NO_EXPIRY;
     }
 
-    /** True when this item has an expiry date that has already passed. */
+    // True when this item has an expiry date that has already passed.
     public boolean isExpired() {
         return hasExpiryDate() && expiryDate < System.currentTimeMillis();
     }
 
-    /**
-     * Whole days until this item expires. Negative when it has already expired.
-     * Returns Long.MAX_VALUE when no expiry date was set, so that items without
-     * a date always sort last in an "expiring soon" list.
-     */
+
+     // Whole days until this item expires. Negative when it has already expired.
+     // Returns Long.MAX_VALUE when no expiry date was set, so that items without
+     //a date always sort last in an "expiring soon" list.
+
     public long daysUntilExpiry() {
         if (!hasExpiryDate()) {
             return Long.MAX_VALUE;
@@ -87,7 +87,7 @@ public class PantryItem {
         return millisRemaining / (1000L * 60 * 60 * 24);
     }
 
-    /** Formatted for display in the pantry list, e.g. "1.5 kg" or "3 pcs". */
+    // Formatted for display in the pantry list, e.g. "1.5 kg" or "3 pcs".
     public String getFormattedQuantity() {
         String amount = (quantity == Math.floor(quantity))
                 ? String.valueOf((long) quantity)     // 3 rather than 3.0

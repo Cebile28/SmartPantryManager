@@ -15,16 +15,15 @@ import com.sikhosana.smartpantrymanager.model.Recipe;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Shows the suggested recipes, split into labelled sections.
- *
- * The list holds two different kinds of row - section headers and recipe
- * cards - so the adapter overrides getItemViewType(). The RecyclerView asks
- * that method what sort of row sits at each position, then hands the answer
- * back through onCreateViewHolder so the right layout gets inflated. Headers
- * are stored as plain Strings in the list and recipes as MatchResult objects,
- * which is why the binding code checks which one it is dealing with.
- */
+
+ // Shows the suggested recipes, split into labelled sections.
+ // The list holds two different kinds of row - section headers and recipe
+ // cards - so the adapter overrides getItemViewType(). The RecyclerView asks
+ // that method what sort of row sits at each position, then hands the answer
+ // back through onCreateViewHolder so the right layout gets inflated. Headers
+ // are stored as plain Strings in the list and recipes as MatchResult objects,
+ // which is why the binding code checks which one it is dealing with.
+
 public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TYPE_HEADER = 0;
@@ -34,7 +33,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         void onRecipeClicked(Recipe recipe);
     }
 
-    /** Mixed list: String entries are headers, MatchResult entries are recipes. */
+    // Mixed list: String entries are headers, MatchResult entries are recipes.
     private final List<Object> rows = new ArrayList<>();
     private final OnRecipeClickListener listener;
 
@@ -42,12 +41,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         this.listener = listener;
     }
 
-    /**
-     * Rebuilds the list from the two result sets.
-     *
-     * A header is only added when its section actually has something in it,
-     * so the user never sees an "Almost There" title with nothing under it.
-     */
+
+     // Rebuilds the list from the two result sets.
+     // A header is only added when its section actually has something in it,
+     // so the user never sees an "Almost There" title with nothing under it.
+
     public void setResults(List<MatchResult> makeable, List<MatchResult> almostThere) {
         rows.clear();
 
@@ -99,7 +97,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return rows.size();
     }
 
-    // ---------------------------------------------------------- viewholders
+    //  viewholders
 
     static class HeaderViewHolder extends RecyclerView.ViewHolder {
         private final TextView textHeader;

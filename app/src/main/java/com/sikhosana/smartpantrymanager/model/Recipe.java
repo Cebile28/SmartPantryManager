@@ -3,14 +3,14 @@ package com.sikhosana.smartpantrymanager.model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A recipe the user might cook.
- *
- * The ingredient list is held as a List<RecipeIngredient> in memory but is
- * stored across two tables in the database (recipes and recipe_ingredients),
- * which keeps the data normalised and lets the matching logic compare
- * quantities ingredient by ingredient.
- */
+
+ // A recipe the user might cook.
+
+ // The ingredient list is held as a List<RecipeIngredient> in memory but is
+ //stored across two tables in the database (recipes and recipe_ingredients),
+ // which keeps the data normalised and lets the matching logic compare
+ // quantities ingredient by ingredient.
+
 public class Recipe {
 
     public static final long NO_ID = -1;
@@ -67,7 +67,7 @@ public class Recipe {
         this.ingredients = (ingredients == null) ? new ArrayList<>() : ingredients;
     }
 
-    /** Convenience for building recipes in the seed data. */
+    // Convenience for building recipes in the seed data.
     public void addIngredient(RecipeIngredient ingredient) {
         if (ingredient != null) {
             ingredient.setRecipeId(this.id);
@@ -83,7 +83,7 @@ public class Recipe {
         return ingredients.size();
     }
 
-    /** Shown on the recipe card, e.g. "5 ingredients - 25 min". */
+    //Shown on the recipe card, e.g. "5 ingredients - 25 min".
     public String getSummaryText() {
         return getIngredientCount() + " ingredients \u2022 " + prepTimeMinutes + " min";
     }

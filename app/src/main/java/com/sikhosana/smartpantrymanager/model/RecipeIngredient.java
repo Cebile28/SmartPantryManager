@@ -1,13 +1,12 @@
 package com.sikhosana.smartpantrymanager.model;
 
-/**
- * One ingredient required by a recipe.
- *
- * This is a separate class - and later a separate database table - rather than
- * a comma-separated string on the Recipe, because the strict-matching rule has
- * to compare quantities per ingredient ("at least the required quantity").
- * A single text field could not answer "does the user have 200g of flour?".
- */
+
+ //One ingredient required by a recipe.
+ //This is a separate class - and later a separate database table - rather than
+ //a comma-separated string on the Recipe, because the strict-matching rule has
+ //to compare quantities per ingredient ("at least the required quantity").
+ //A single text field could not answer "does the user have 200g of flour?".
+
 public class RecipeIngredient {
 
     public static final long NO_ID = -1;
@@ -54,7 +53,7 @@ public class RecipeIngredient {
     public String getUnit() { return unit; }
     public void setUnit(String unit) { this.unit = unit; }
 
-    /** Formatted for the recipe detail screen, e.g. "200 g flour". */
+    //Formatted for the recipe detail screen, e.g. "200 g flour".
     public String getDisplayText() {
         String amount = (quantity == Math.floor(quantity))
                 ? String.valueOf((long) quantity)

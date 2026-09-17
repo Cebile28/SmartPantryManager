@@ -24,12 +24,12 @@ public final class RecipeMatcher {
 
     private RecipeMatcher() { }
 
-    /**
-     * Tests one recipe against the pantry.
-     *
-     * Every ingredient is checked even after the first failure, because the
-     * result records the complete shortfall so the UI can explain it.
-     */
+
+     // Tests one recipe against the pantry.
+
+     //Every ingredient is checked even after the first failure, because the
+     //result records the complete shortfall so the UI can explain it.
+
     public static MatchResult match(Recipe recipe, List<PantryItem> pantry) {
         MatchResult result = new MatchResult(recipe);
 
@@ -68,12 +68,11 @@ public final class RecipeMatcher {
         return result;
     }
 
-    /**
-     * Every recipe the user can cook right now.
-     *
-     * Sorted by fewest ingredients first, so the quickest options appear at
-     * the top of the suggestions list.
-     */
+
+     // Every recipe the user can cook right now.
+     //Sorted by fewest ingredients first, so the quickest options appear at
+     //the top of the suggestions list.
+
     public static List<MatchResult> findMakeable(List<Recipe> recipes, List<PantryItem> pantry) {
         List<MatchResult> makeable = new ArrayList<>();
 
@@ -90,12 +89,11 @@ public final class RecipeMatcher {
         return makeable;
     }
 
-    /**
-     * Recipes short of exactly one ingredient.
-     *
-     * Kept strictly separate from findMakeable so the suggestions list never
-     * mixes "you can cook this" with "you nearly can".
-     */
+
+     // Recipes short of exactly one ingredient.
+     //Kept strictly separate from findMakeable so the suggestions list never
+     //mixes "you can cook this" with "you nearly can".
+
     public static List<MatchResult> findAlmostThere(List<Recipe> recipes, List<PantryItem> pantry) {
         List<MatchResult> almost = new ArrayList<>();
 

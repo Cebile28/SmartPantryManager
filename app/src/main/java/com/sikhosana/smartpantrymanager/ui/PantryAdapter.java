@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.PantryViewHolder> {
 
-    /** Lets the Activity react to taps without the adapter knowing about it. */
+
     public interface OnItemActionListener {
         void onItemClicked(PantryItem item);
         void onDeleteClicked(PantryItem item);
@@ -68,12 +68,12 @@ public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.PantryView
         return items.size();
     }
 
-    // ------------------------------------------------------------ ViewHolder
+    // ViewHolder
 
-    /**
-     * Holds the findViewById results for one row so they are looked up once
-     * when the row is created rather than every time it scrolls into view.
-     */
+
+     //Holds the findViewById results for one row so they are looked up once
+     //when the row is created rather than every time it scrolls into view.
+
     class PantryViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView textName;
@@ -107,11 +107,11 @@ public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.PantryView
             });
         }
 
-        /**
-         * Shows a colour-coded expiry line, or hides it when the item has no
-         * expiry date. The else-branch that hides the view is essential:
-         * without it a recycled row would keep the previous item's warning.
-         */
+
+         // Shows a colour-coded expiry line, or hides it when the item has no
+         //expiry date. The else-branch that hides the view is essential:
+         //without it a recycled row would keep the previous item's warning.
+
         private void bindExpiry(PantryItem item) {
             if (!item.hasExpiryDate()) {
                 textExpiry.setVisibility(View.GONE);

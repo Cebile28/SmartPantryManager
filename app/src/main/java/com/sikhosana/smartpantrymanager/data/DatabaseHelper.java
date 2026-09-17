@@ -11,23 +11,23 @@ import com.sikhosana.smartpantrymanager.model.RecipeIngredient;
 
 import java.util.List;
 
-/**
- * Creates and manages the app's local SQLite database.
- *
- * SQLiteOpenHelper handles the file lifecycle for us: onCreate() runs exactly
- * once, the first time the database is opened on a device, and onUpgrade() runs
- * only when DATABASE_VERSION is increased. Every later launch simply opens the
- * existing file, which is what makes the data genuinely persistent.
- *
- * Three tables are used:
- *   pantry_items       - what the user currently has at home
- *   recipes            - the seeded recipe collection
- *   recipe_ingredients - one row per ingredient a recipe needs
- *
- * Recipes and their ingredients are kept in two tables rather than storing a
- * comma-separated list, because the strict-matching rule has to compare the
- * required quantity of each individual ingredient against the pantry.
- */
+
+ //Creates and manages the app's local SQLite database.
+
+ //SQLiteOpenHelper handles the file lifecycle for us: onCreate() runs exactly
+ //once, the first time the database is opened on a device, and onUpgrade() runs
+ //only when DATABASE_VERSION is increased. Every later launch simply opens the
+ //existing file, which is what makes the data genuinely persistent.
+
+ // Three tables are used:
+ // pantry_items       - what the user currently has at home
+ //  recipes            - the seeded recipe collection
+ // recipe_ingredients - one row per ingredient a recipe needs
+
+ //Recipes and their ingredients are kept in two tables rather than storing a
+ //comma-separated list, because the strict-matching rule has to compare the
+ // required quantity of each individual ingredient against the pantry.
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DatabaseHelper";
@@ -35,7 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "smart_pantry.db";
     public static final int DATABASE_VERSION = 1;
 
-    // ---------------------------------------------------------------- pantry
+    //pantry
     public static final class PantryTable {
         public static final String TABLE_NAME   = "pantry_items";
         public static final String COL_ID       = "_id";
@@ -48,7 +48,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         private PantryTable() { }
     }
 
-    // --------------------------------------------------------------- recipes
+    // recipes
     public static final class RecipeTable {
         public static final String TABLE_NAME    = "recipes";
         public static final String COL_ID        = "_id";
@@ -62,7 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         private RecipeTable() { }
     }
 
-    // ---------------------------------------------------- recipe ingredients
+    // recipe ingredients
     public static final class IngredientTable {
         public static final String TABLE_NAME   = "recipe_ingredients";
         public static final String COL_ID       = "_id";
@@ -74,7 +74,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         private IngredientTable() { }
     }
 
-    // ------------------------------------------------------------ statements
+    // statements
 
     private static final String SQL_CREATE_PANTRY =
             "CREATE TABLE " + PantryTable.TABLE_NAME + " (" +
@@ -105,12 +105,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "FOREIGN KEY (" + IngredientTable.COL_RECIPE + ") REFERENCES " +
                     RecipeTable.TABLE_NAME + "(" + RecipeTable.COL_ID + ") ON DELETE CASCADE)";
 
-    /** Speeds up looking up every ingredient belonging to one recipe. */
+    //Speeds up looking up every ingredient belonging to one recipe.
     private static final String SQL_INDEX_INGREDIENTS =
             "CREATE INDEX idx_ingredient_recipe ON " + IngredientTable.TABLE_NAME +
                     "(" + IngredientTable.COL_RECIPE + ")";
 
-    // ------------------------------------------------------------- singleton
+    //singleton
 
     private static DatabaseHelper instance;
 
@@ -130,7 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    // ------------------------------------------------------------- lifecycle
+    // lifecycle
 
     @Override
     public void onConfigure(SQLiteDatabase db) {
@@ -153,18 +153,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         seedRecipes(db);
     }
 
-    /**
-     * Inserts the starter recipe collection.
-     *
-     * Note this takes the SQLiteDatabase that onCreate was handed, rather than
-     * calling getWritableDatabase(). Asking the helper for a database while it
-     * is still inside onCreate would recurse and throw.
-     *
-     * Everything happens inside one transaction: with 18 recipes and roughly 80
-     * ingredient rows, committing individually would be noticeably slow on
-     * first launch, and a failure halfway through would leave recipes with
-     * missing ingredients.
-     */
+
+     //Inserts the starter recipe collection.
+
+     //This takes the SQLiteDatabase that onCreate was handed, rather than
+     //calling getWritableDatabase(). Asking the helper for a database while it
+     //is still inside onCreate would recurse and throw.
+
+     //Everything happens inside one transaction: with 18 recipes and roughly 80
+     //ingredient rows, committing individually would be noticeably slow on
+     //first launch, and a failure halfway through would leave recipes with
+     //missing ingredients.
+
     private void seedRecipes(SQLiteDatabase db) {
         List<Recipe> recipes = RecipeSeedData.getSeedRecipes();
         int ingredientCount = 0;

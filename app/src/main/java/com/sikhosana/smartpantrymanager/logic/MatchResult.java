@@ -5,12 +5,11 @@ import com.sikhosana.smartpantrymanager.model.Recipe;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * The outcome of testing one recipe against the pantry.
- *
- * As well as the yes/no answer, this carries WHY a recipe failed, which lets
- * the "Almost There" list tell the user exactly what they are short of.
- */
+
+ //The outcome of testing one recipe against the pantry.
+ //As well as the yes/no answer, this carries WHY a recipe failed, which lets
+ //the "Almost There" list tell the user exactly what they are short of.
+
 public class MatchResult {
 
     private final Recipe recipe;
@@ -29,25 +28,25 @@ public class MatchResult {
     void addMissing(String ingredientName) { missing.add(ingredientName); }
     void addInsufficient(String ingredientName) { insufficient.add(ingredientName); }
 
-    /**
-     * The strict-matching rule in one line: a recipe can be made only when
-     * nothing is missing AND nothing is short.
-     */
+
+     //The strict-matching rule in one line: a recipe can be made only when
+     //nothing is missing AND nothing is short.
+
     public boolean canMake() {
         return missing.isEmpty() && insufficient.isEmpty();
     }
 
-    /** How many ingredients stand between the user and this recipe. */
+    //How many ingredients stand between the user and this recipe.
     public int getShortfallCount() {
         return missing.size() + insufficient.size();
     }
 
-    /** True when exactly one ingredient is missing - the "almost there" case. */
+    // True when exactly one ingredient is missing - the "almost there" case.
     public boolean isAlmostThere() {
         return getShortfallCount() == 1;
     }
 
-    /** Human-readable summary for the Almost There list. */
+    // Human-readable summary for the Almost There list.
     public String getShortfallText() {
         List<String> all = new ArrayList<>(missing);
         all.addAll(insufficient);

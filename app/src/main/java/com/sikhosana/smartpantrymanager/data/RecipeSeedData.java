@@ -5,17 +5,17 @@ import com.sikhosana.smartpantrymanager.model.Recipe;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * The starter recipe collection loaded into the database on first run.
- *
- * The recipes deliberately share a small set of common staples (eggs, milk,
- * flour, butter, rice, pasta, onion, garlic and so on). That overlap is what
- * makes the Suggested Recipes screen interesting: adding or removing a single
- * pantry item causes recipes to appear or disappear from the list.
- *
- * Ingredient counts range from 2 to 6 so that a small pantry unlocks a few
- * simple recipes while more demanding ones stay correctly excluded.
- */
+
+ //The starter recipe collection loaded into the database on first run.
+
+ //The recipes deliberately share a small set of common staples (eggs, milk,
+ // flour, butter, rice, pasta, onion, garlic and so on). That overlap is what
+ //makes the Suggested Recipes screen interesting: adding or removing a single
+ //pantry item causes recipes to appear or disappear from the list.
+
+ //Ingredient counts range from 2 to 6 so that a small pantry unlocks a few
+ //simple recipes while more demanding ones stay correctly excluded.
+
 public final class RecipeSeedData {
 
     private RecipeSeedData() { }
@@ -25,7 +25,7 @@ public final class RecipeSeedData {
 
         Recipe r;
 
-        // ------------------------------------------------------- Breakfast
+        // Breakfast
         r = new Recipe("Scrambled Eggs",
                 "Soft, creamy scrambled eggs in under five minutes.",
                 "1. Beat the eggs with the milk and salt.\n" +
@@ -79,7 +79,7 @@ public final class RecipeSeedData {
         r.addIngredient("Sugar", 20, "g");
         recipes.add(r);
 
-        // ------------------------------------------------------------ Main
+        // Main
         r = new Recipe("Garlic Butter Pasta",
                 "Four ingredients, fifteen minutes, no shopping trip.",
                 "1. Boil the pasta in salted water until al dente.\n" +
@@ -239,7 +239,7 @@ public final class RecipeSeedData {
         r.addIngredient("Salt", 1, "tsp");
         recipes.add(r);
 
-        // ---------------------------------------------------------- Dessert
+        //  Dessert
         r = new Recipe("Sugar Cookies",
                 "Crisp-edged, chewy-centred biscuits.",
                 "1. Cream the butter and sugar together.\n" +

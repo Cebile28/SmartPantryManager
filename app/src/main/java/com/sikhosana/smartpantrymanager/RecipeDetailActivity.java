@@ -137,7 +137,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
     }
 
-    /** True when anything in the pantry satisfies this requirement. */
+    // True when anything in the pantry satisfies this requirement.
     private boolean pantryCanCover(List<PantryItem> pantry, RecipeIngredient ingredient) {
         for (PantryItem item : pantry) {
             if (IngredientMatcher.compare(item, ingredient)

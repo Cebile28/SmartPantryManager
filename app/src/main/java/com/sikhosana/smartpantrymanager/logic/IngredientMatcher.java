@@ -29,19 +29,19 @@ public final class IngredientMatcher {
 
     private IngredientMatcher() { }
 
-    /** The outcome of comparing one pantry item against one requirement. */
+    //The outcome of comparing one pantry item against one requirement.
     public enum Result {
-        /** Enough of the right ingredient. */
+        // Enough of the right ingredient.
         SATISFIED,
-        /** Right ingredient, but not enough of it. */
+        // Right ingredient, but not enough of it.
         INSUFFICIENT,
-        /** Different ingredient entirely. */
+        //Different ingredient entirely.
         NAME_MISMATCH
     }
 
-    // ------------------------------------------------------------- names
+    //  names
 
-    /** Words that mean the same thing, mapped onto one spelling. */
+    // Words that mean the same thing, mapped onto one spelling.
     private static final Map<String, String> SYNONYMS = new HashMap<>();
     static {
         SYNONYMS.put("aubergine", "eggplant");
@@ -57,12 +57,11 @@ public final class IngredientMatcher {
         SYNONYMS.put("chili", "chilli");
     }
 
-    /**
-     * Reduces a name to a comparable form.
-     *
-     * "  Tomatoes! " and "tomato" both become "tomato", which is what stops a
-     * trivial spelling difference from hiding a recipe the user can cook.
-     */
+
+     // Reduces a name to a comparable form.
+     // "  Tomatoes! " and "tomato" both become "tomato", which is what stops a
+     //trivial spelling difference from hiding a recipe the user can cook.
+
     public static String normaliseName(String raw) {
         if (raw == null) {
             return "";
@@ -99,14 +98,14 @@ public final class IngredientMatcher {
         return name;
     }
 
-    /**
-     * Turns a plural into its singular form.
-     *
-     * These are deliberately simple rules rather than a full language library:
-     * they cover the food words this app deals with, which is all the brief
-     * requires. Irregular plurals such as "leaves" are left alone, which is
-     * safe because both sides of the comparison are normalised the same way.
-     */
+
+     //Turns a plural into its singular form.
+
+     //These are deliberately simple rules rather than a full language library:
+     //they cover the food words this app deals with, which is all the brief
+     // requires. Irregular plurals such as "leaves" are left alone, which is
+     // safe because both sides of the comparison are normalised the same way.
+
     private static String singularise(String word) {
         // Only the last word of a phrase is pluralised: "tins of tomatoes".
         int lastSpace = word.lastIndexOf(' ');
@@ -135,7 +134,7 @@ public final class IngredientMatcher {
         return prefix + last;
     }
 
-    /** True when two ingredient names refer to the same thing. */
+    //True when two ingredient names refer to the same thing.
     public static boolean namesMatch(String a, String b) {
         String normalisedA = normaliseName(a);
         String normalisedB = normaliseName(b);
@@ -144,10 +143,10 @@ public final class IngredientMatcher {
 
     // ------------------------------------------------------------- units
 
-    /** What kind of measurement a unit expresses. */
+    // What kind of measurement a unit expresses.
     private enum Dimension { MASS, VOLUME, COUNT, UNKNOWN }
 
-    /** A unit and how many base units one of it is worth. */
+    //A unit and how many base units one of it is worth.
     private static final class Unit {
         final Dimension dimension;
         final double toBase;
@@ -190,18 +189,16 @@ public final class IngredientMatcher {
         return unit == null ? new Unit(Dimension.UNKNOWN, 1) : unit;
     }
 
-    // -------------------------------------------------------- the decision
+    // the decision
 
-    /**
-     * Compares one pantry item against one recipe requirement.
-     *
-     * When the two units measure different things - grams of salt against a
-     * teaspoon of salt, say - there is no correct conversion without knowing
-     * the ingredient's density. Rather than wrongly hiding a recipe the user
-     * can almost certainly cook, the ingredient counts as satisfied on the
-     * strength of being present. This is a deliberate trade-off: it errs
-     * towards suggesting a recipe rather than silently excluding it.
-     */
+     //Compares one pantry item against one recipe requirement.
+     //When the two units measure different things - grams of salt against a
+     //teaspoon of salt, say - there is no correct conversion without knowing
+     //the ingredient's density. Rather than wrongly hiding a recipe the user
+     //can almost certainly cook, the ingredient counts as satisfied on the
+     // strength of being present. This is a deliberate trade-off: it errs
+     //towards suggesting a recipe rather than silently excluding it.
+
     public static Result compare(PantryItem have, RecipeIngredient need) {
         if (have == null || need == null) {
             return Result.NAME_MISMATCH;
